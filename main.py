@@ -1,12 +1,12 @@
 from menu import menu, pausa
-from db import getData, insertDB, searchDB, updateDB
+from db import getData, insertDB, updateDB, removeDB
 
 def main():
     title = "Menu"
     items = ["1 Insert", 
              "2 GetData", 
              "3 Update",
-             "4 Search",
+             "4 Remove",
              "Exit"]
 
     repeat = True
@@ -23,19 +23,15 @@ def main():
             pausa(0)
 
         elif (opc == 3):
-            id = input('Enter an id to search: ')
+            id = input('Enter an id to update: ')
             updateDB(id)
             pausa(0)
 
         elif (opc == 4):
-            id = input('Enter an id to search: ')
-            if searchDB(id) == 1:
-                print('Id found')
-                pausa(0)
-            else:
-                print('Id not found')
-                pausa()
-            
+            id = input('Enter an id to remove: ')
+            removeDB(id)
+            pausa(0)
+
         repeat = (opc < len(items))
 
 if __name__ == "__main__":

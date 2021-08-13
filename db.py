@@ -41,3 +41,9 @@ def updateDB(id):
             'date': date
         }
         db.update(data, Task.id == id)
+
+def removeDB(id):
+    if searchDB(id) == 1: 
+        sure = input('Are you sure to delete, 1 yes, 0 no: ')
+        remove = True if sure == '1' else False
+        if remove: db.remove(Task.id == id)
