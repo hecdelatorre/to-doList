@@ -1,12 +1,12 @@
 from menu import menu, pausa
-from db import getData, insertDB, searchDB
-from datetime import datetime
+from db import getData, insertDB, searchDB, updateDB
 
 def main():
     title = "Menu"
     items = ["1 Insert", 
              "2 GetData", 
-             "3 Search",
+             "3 Update",
+             "4 Search",
              "Exit"]
 
     repeat = True
@@ -14,9 +14,7 @@ def main():
         opc = menu(title, items)
 
         if (opc == 1):
-            task = input('Enter a task: ')
-            date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
-            insertDB(task, date)
+            insertDB()
             pausa(0)
 
         elif (opc == 2):
@@ -24,6 +22,11 @@ def main():
             pausa(0)
 
         elif (opc == 3):
+            id = input('Enter an id to search: ')
+            updateDB(id)
+            pausa(0)
+
+        elif (opc == 4):
             id = input('Enter an id to search: ')
             if searchDB(id) == 1:
                 print('Id found')
