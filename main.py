@@ -18,7 +18,8 @@ def main():
             pausa(0)
 
         elif (opc == 2):
-            getData()
+            _, _, data = getData()
+            print(f' Data\n{data}')
             pausa(0)
 
         elif (opc == 3):
