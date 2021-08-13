@@ -1,3 +1,5 @@
+# Ignore JSON files from db folder
+db/*.json
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -103,3 +105,63 @@ venv.bak/
 dmypy.json
 # Pyre type checker
 .pyre/
+# OS generated files #
+DS_Store*
+Icon?
+# Temp files when opening LibreOffice on ubuntu
+.~lock.*
+# Windows detritus
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+# Folder config file
+Desktop.ini
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+# Mac desktop service store files
+.DS_Store
+# temporary files
+*~
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+# KDE directory preferences
+.directory
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+# Vim
+.vim
+# swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+# temporary
+.netrwhist
+### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+# dotenv environment variables file
+.env
+.env.test
+# vscode
+**/.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+# Output of 'npm pack'
+*.tgz
+# node_modules
+**/node_modules
+node_modules/
+# Gatsby files
+.cache/
