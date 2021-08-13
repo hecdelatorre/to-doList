@@ -17,3 +17,6 @@ def insertDB(task, date):
 
 def getData(): 
     for item in db: print(f"id :: {item['id']}\nTask :: {item['task']}\nComplete :: {item['complete']}\nDate :: {item['date']}\n")
+
+def searchDB(id): return len(db.search(Task.id == id))
+
