@@ -1,10 +1,11 @@
 from menu import menu, pausa
+from db import getData, insertDB
+from datetime import datetime
 
 def main():
     title = "Menu"
-    items = ["1 Option", 
-             "2 Option", 
-             "3 Option", 
+    items = ["1 Insert", 
+             "2 GetData", 
              "Exit"]
 
     repeat = True
@@ -12,15 +13,15 @@ def main():
         opc = menu(title, items)
 
         if (opc == 1):
-            print('Option 1')
-            pausa()
+            task = input('Enter a task: ')
+            date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+            insertDB(task, date)
+            pausa(0)
+
         elif (opc == 2):
-            print('Option 2')
-            pausa()
-        elif (opc == 3):
-            print('Option 3')
-            pausa()
-    
+            getData()
+            pausa(0)
+            
         repeat = (opc < len(items))
 
 if __name__ == "__main__":
