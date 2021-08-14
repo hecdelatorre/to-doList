@@ -81,3 +81,7 @@ def removeDB(id):
         sure = input('Are you sure to delete, 1 yes, 0 no: ')
         remove = True if sure == '1' else False
         if remove: db.remove(Element.id == id)
+
+def getComplete():
+    com = db.search(Element.state.complete == True)
+    return ''
