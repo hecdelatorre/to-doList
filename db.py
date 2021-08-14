@@ -8,6 +8,13 @@ Element = Query()
 
 def insertDB():
     name = input('Enter a name: ')
+    valName = True
+    count = 0
+    while valName:
+        for _ in name: count += 1
+        if count == 0: name = input('Please enter a valid name: ')
+        valName = (count == 0)
+
     date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     data = {
         'id': str(uuid4()),
@@ -26,7 +33,7 @@ def getData():
     for item in db:
         idL.append(item['id'])
         nameL.append(item['name'])
-        data = data + f"\nid :: {item['id']}\nName :: {item['name']}\nIn progress :: {item['state']['inProgress']}\nComplete :: {item['state']['complete']}\nDate :: {item['date']}\n"
+        data = data + f"\nName :: {item['name']}\nIn progress :: {item['state']['inProgress']}\nComplete :: {item['state']['complete']}\nDate :: {item['date']}\n"
     idL.append('Exit')
     nameL.append('Exit')
     return idL, nameL, data
@@ -40,11 +47,19 @@ def updateDB(id):
         complete = db.search(Element.id == id)[0]['state']['complete']
         date = db.search(Element.id == id)[0]['date']
 
-        print(f"\nCurrent data\n\nid :: {id}\nName :: {name}\nIn progress :: {inProgress}\nComplete :: {complete}\nDate :: {date}\n")
+        print(f"\nCurrent data\n\nName :: {name}\nIn progress :: {inProgress}\nComplete :: {complete}\nDate :: {date}\n")
         
         changeName = input('Modify name 1 yes, 0 no: ')
         changeName = True if changeName == '1' else False
         name = input('Please enter a new name: ') if changeName else name
+        
+        valName = True
+        count = 0
+        while valName:
+            for _ in name: count += 1
+            if count == 0: name = input('Please enter a valid name: ')
+            valName = (count == 0)
+
         
         changeState = input('Mark as pending 0, in progress 1 and finished 2: ')
         inProgress = True if changeState == '1' else False
