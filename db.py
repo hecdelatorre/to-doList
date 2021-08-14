@@ -2,48 +2,66 @@ from tinydb import TinyDB, Query
 from uuid import uuid4
 from datetime import datetime
 
-db = TinyDB('db/db.json', sort_keys=True, indent=2, separators=(',', ': '))
-db.default_table_name = 'tasks'
-Task = Query()
+db = TinyDB('db/db.json', indent=2, separators=(',', ': '))
+db.default_table_name = 'list'
+Element = Query()
 
 def insertDB():
-    task = input('Enter a task: ')
-    date =datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+    name = input('Enter a name: ')
+    date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     data = {
         'id': str(uuid4()),
-        'task': task,
-        'complete': False,
+        'name': name,
+        'state': {
+            'inProgress': False,
+            'complete': False
+        },
         'date': date
     }
     db.insert(data)
 
 def getData():
-    idL, taskL = [], []
+    idL, nameL = [], []
     data = ''
     for item in db:
         idL.append(item['id'])
-        taskL.append(item['task'])
-        data = data + f"\nid :: {item['id']}\nTask :: {item['task']}\nComplete :: {item['complete']}\nDate :: {item['date']}\n"
+        nameL.append(item['name'])
+        data = data + f"\nid :: {item['id']}\nName :: {item['name']}\nIn progress :: {item['state']['inProgress']}\nComplete :: {item['state']['complete']}\nDate :: {item['date']}\n"
 
-    return idL, taskL, data
+    return idL, nameL, data
 
-def searchDB(id): return len(db.search(Task.id == id))
+def searchDB(id): return len(db.search(Element.id == id))
 
 def updateDB(id):
     if searchDB(id) == 1:
-        task = input('Enter task: ')
-        mark = input('Mark as completed 1 and not completed 0: ')
-        complete = True if mark == '1' else False
+        name = db.search(Element.id == id)[0]['name']
+        inProgress = db.search(Element.id == id)[0]['state']['inProgress']
+        complete = db.search(Element.id == id)[0]['state']['complete']
+        date = db.search(Element.id == id)[0]['date']
+
+        print(f"\nCurrent data\n\nid :: {id}\nName :: {name}\nIn progress :: {inProgress}\nComplete :: {complete}\nDate :: {date}\n")
+        
+        changeName = input('Modify name 1 yes, 0 no: ')
+        changeName = True if changeName == '1' else False
+        name = input('Please enter a new name: ') if changeName else name
+        
+        changeState = input('Mark as pending 0, in progress 1 and finished 2: ')
+        inProgress = True if changeState == '1' else False
+        complete = True if changeState == '2' else False
         date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+
         data = {
-            'task': task,
-            'complete': complete,
+            'name': name,
+            'state': {
+                'inProgress': inProgress,
+                'complete': complete
+            },
             'date': date
         }
-        db.update(data, Task.id == id)
+        db.update(data, Element.id == id)
 
 def removeDB(id):
     if searchDB(id) == 1: 
         sure = input('Are you sure to delete, 1 yes, 0 no: ')
         remove = True if sure == '1' else False
-        if remove: db.remove(Task.id == id)
+        if remove: db.remove(Element.id == id)
