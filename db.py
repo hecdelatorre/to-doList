@@ -83,5 +83,5 @@ def removeDB(id):
         if remove: db.remove(Element.id == id)
 
 def getComplete():
-    com = db.search(Element.state.complete == True)
+    # com = db.search(Element.state.complete == True)
     return ''
