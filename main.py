@@ -1,4 +1,4 @@
-from menu import menu, pausa
+from menu import menu, pausa, receivedData
 from db import getData, insertDB, updateDB, removeDB
 
 def main():
@@ -23,14 +23,18 @@ def main():
             pausa(0)
 
         elif (opc == 3):
-            id = input('Enter an id to update: ')
-            updateDB(id)
-            pausa(0)
+            idL, nameL, _ = getData()
+            id = receivedData('Select: ', idL, nameL, 'green')
+            if id != 'Exit':
+                updateDB(id)
+                pausa(0)
 
         elif (opc == 4):
-            id = input('Enter an id to remove: ')
-            removeDB(id)
-            pausa(0)
+            idL, nameL, _ = getData()
+            id = receivedData('Select: ', idL, nameL, 'red')
+            if id != 'Exit':
+                removeDB(id)
+                pausa(0)
 
         repeat = (opc < len(items))
 

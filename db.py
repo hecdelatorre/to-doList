@@ -27,7 +27,8 @@ def getData():
         idL.append(item['id'])
         nameL.append(item['name'])
         data = data + f"\nid :: {item['id']}\nName :: {item['name']}\nIn progress :: {item['state']['inProgress']}\nComplete :: {item['state']['complete']}\nDate :: {item['date']}\n"
-
+    idL.append('Exit')
+    nameL.append('Exit')
     return idL, nameL, data
 
 def searchDB(id): return len(db.search(Element.id == id))

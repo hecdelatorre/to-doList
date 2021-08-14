@@ -32,13 +32,12 @@ def menu(title, items):
 #     menu_entry_index = terminal_menu.show()
 #     print(f"You have selected {options[menu_entry_index]}!")
 
-def receivedData(title, items):
+def receivedData(title, idL, nameL, color):
     cursor = "❯ "
-    cursor_style = ("fg_cyan", "bold")
-    menu_style = ("fg_gray", "fg_cyan")
-
+    cursor_style = (f"fg_{color}", "bold")
+    menu_style = ("fg_gray", f"fg_{color}")
     main_menu = TerminalMenu(
-        menu_entries = items,
+        menu_entries = nameL,
         title = f'  {title}',
         menu_cursor = cursor,
         menu_cursor_style = cursor_style,
@@ -48,6 +47,4 @@ def receivedData(title, items):
     )
     
     num = main_menu.show()
-    dat = items[num]
-    return dat
-
+    return idL[num]
