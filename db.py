@@ -6,15 +6,17 @@ db = TinyDB('db/db.json', indent=2, separators=(',', ': '))
 db.default_table_name = 'list'
 Element = Query()
 
+def valitadateText(text, message, valName = True, count = 0):
+    while valName:
+        for _ in text: count += 1
+        text = input(f'{message}') if count == 0 else text
+        valName = (count == 0)
+    return text
+
 def insertDB():
     name = input('Enter a name: ')
-    valName = True
-    count = 0
-    while valName:
-        for _ in name: count += 1
-        if count == 0: name = input('Please enter a valid name: ')
-        valName = (count == 0)
-
+    name = valitadateText(name, 'Please enter a valid name: ')
+    
     date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     data = {
         'id': str(uuid4()),
@@ -40,27 +42,24 @@ def getData():
 
 def searchDB(id): return len(db.search(Element.id == id))
 
+def getById(id, message):
+    name = db.search(Element.id == id)[0]['name']
+    inProgress = db.search(Element.id == id)[0]['state']['inProgress']  
+    complete = db.search(Element.id == id)[0]['state']['complete']
+    date = db.search(Element.id == id)[0]['date']
+    info = f"\n{message}\n\nName :: {name}\nIn progress :: {inProgress}\nComplete :: {complete}\nDate :: {date}\n"
+    return name, inProgress, complete, date, info
+
 def updateDB(id):
     if searchDB(id) == 1:
-        name = db.search(Element.id == id)[0]['name']
-        inProgress = db.search(Element.id == id)[0]['state']['inProgress']
-        complete = db.search(Element.id == id)[0]['state']['complete']
-        date = db.search(Element.id == id)[0]['date']
+        name, inProgress, complete, date, info = getById(id, 'Current data')
+        print(info)
 
-        print(f"\nCurrent data\n\nName :: {name}\nIn progress :: {inProgress}\nComplete :: {complete}\nDate :: {date}\n")
-        
         changeName = input('Modify name 1 yes, 0 no: ')
         changeName = True if changeName == '1' else False
         name = input('Please enter a new name: ') if changeName else name
-        
-        valName = True
-        count = 0
-        while valName:
-            for _ in name: count += 1
-            if count == 0: name = input('Please enter a valid name: ')
-            valName = (count == 0)
+        name = valitadateText(name, 'Please enter a valid name: ')
 
-        
         changeState = input('Mark as pending 0, in progress 1 and finished 2: ')
         inProgress = True if changeState == '1' else False
         complete = True if changeState == '2' else False
