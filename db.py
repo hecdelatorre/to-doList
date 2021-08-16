@@ -48,11 +48,11 @@ def getById(id, message):
     complete = db.search(Element.id == id)[0]['state']['complete']
     date = db.search(Element.id == id)[0]['date']
     info = f"\n{message}\n\nName :: {name}\nIn progress :: {inProgress}\nComplete :: {complete}\nDate :: {date}\n"
-    return name, inProgress, complete, date, info
+    return info, name, inProgress, complete, date
 
 def updateDB(id):
     if searchDB(id) == 1:
-        name, inProgress, complete, date, info = getById(id, 'Current data')
+        info, name, inProgress, complete, date = getById(id, 'Current data')
         print(info)
 
         changeName = input('Modify name 1 yes, 0 no: ')
@@ -77,6 +77,8 @@ def updateDB(id):
 
 def removeDB(id):
     if searchDB(id) == 1: 
+        info = getById(id, 'Data to remove')
+        print(info[0])
         sure = input('Are you sure to delete, 1 yes, 0 no: ')
         remove = True if sure == '1' else False
         if remove: db.remove(Element.id == id)
