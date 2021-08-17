@@ -1,6 +1,7 @@
 from tinydb import TinyDB, Query
 from uuid import uuid4
 from datetime import datetime
+from menu import menuShortcuts
 
 db = TinyDB('db/db.json', indent=2, separators=(',', ': '))
 db.default_table_name = 'list'
@@ -55,14 +56,17 @@ def updateDB(id):
         info, name, inProgress, complete, date = getById(id, 'Current data')
         print(info)
 
-        changeName = input('Modify name 1 yes, 0 no: ')
-        changeName = True if changeName == '1' else False
+        changeName = menuShortcuts(['[Si]', '[NO]'], 'Modify name')
+        changeName = True if changeName == 0 else False
         name = input('Please enter a new name: ') if changeName else name
         name = valitadateText(name, 'Please enter a valid name: ')
 
-        changeState = input('Mark as pending 0, in progress 1 and finished 2: ')
-        inProgress = True if changeState == '1' else False
-        complete = True if changeState == '2' else False
+        changeState = menuShortcuts(['[Pending]', '[In progress]', '[Finished]'], 'Modify state')
+        inProgress = True if changeState == 1 else False
+        inProgress = False if changeState == 0 else inProgress
+        complete = True if changeState == 2 else False
+        complete = False if changeState == 0 else complete
+
         date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
 
         data = {

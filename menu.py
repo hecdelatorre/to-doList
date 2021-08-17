@@ -23,14 +23,8 @@ def menu(title, items):
     )
     
     num = main_menu.show()
-    num += 1
+    num = num + 1 if num is not None else exit()
     return num
-
-# def dataEnterX():
-#     options = ["entry 1", "entry 2", "entry 3"]
-#     terminal_menu = TerminalMenu(options)
-#     menu_entry_index = terminal_menu.show()
-#     print(f"You have selected {options[menu_entry_index]}!")
 
 def receivedData(title, idL, nameL, color):
     cursor = "❯ "
@@ -48,3 +42,17 @@ def receivedData(title, idL, nameL, color):
     
     num = main_menu.show()
     return idL[num]
+
+def menuShortcuts(items, title):
+    menu = TerminalMenu (
+        items, 
+        title = f"  {title}",
+        menu_cursor = "❯ ",
+        menu_cursor_style = ("fg_cyan", "bold"),
+        menu_highlight_style = ("fg_gray", "fg_cyan"),
+        shortcut_key_highlight_style = ("fg_green",),
+        shortcut_brackets_highlight_style = ("fg_green",)
+    )
+
+    index = menu.show()
+    return index
