@@ -26,7 +26,7 @@ def menu(title, items):
     num = num + 1 if num is not None else exit()
     return num
 
-def receivedData(title, idL, nameL, color):
+def receivedData(title, idL, nameL, color = 'cyan'):
     cursor = "❯ "
     cursor_style = (f"fg_{color}", "bold")
     menu_style = ("fg_gray", f"fg_{color}")
@@ -43,13 +43,13 @@ def receivedData(title, idL, nameL, color):
     num = main_menu.show()
     return idL[num]
 
-def menuShortcuts(items, title):
+def menuShortcuts(items, title, color = 'cyan'):
     menu = TerminalMenu (
         items, 
         title = f"  {title}",
         menu_cursor = "❯ ",
-        menu_cursor_style = ("fg_cyan", "bold"),
-        menu_highlight_style = ("fg_gray", "fg_cyan"),
+        menu_cursor_style = (f"fg_{color}", "bold"),
+        menu_highlight_style = ("fg_gray", f"fg_{color}"),
         shortcut_key_highlight_style = ("fg_green",),
         shortcut_brackets_highlight_style = ("fg_green",)
     )

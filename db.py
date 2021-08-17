@@ -56,12 +56,12 @@ def updateDB(id):
         info, name, inProgress, complete, date = getById(id, 'Current data')
         print(info)
 
-        changeName = menuShortcuts(['[Si]', '[NO]'], 'Modify name')
+        changeName = menuShortcuts(['[Yes]', '[NO]'], 'Modify name', 'green')
         changeName = True if changeName == 0 else False
         name = input('Please enter a new name: ') if changeName else name
         name = valitadateText(name, 'Please enter a valid name: ')
 
-        changeState = menuShortcuts(['[Pending]', '[In progress]', '[Finished]'], 'Modify state')
+        changeState = menuShortcuts(['[Pending]', '[In progress]', '[Finished]'], 'Modify state', 'green')
         inProgress = True if changeState == 1 else False
         inProgress = False if changeState == 0 else inProgress
         complete = True if changeState == 2 else False
@@ -83,8 +83,8 @@ def removeDB(id):
     if searchDB(id) == 1: 
         info = getById(id, 'Data to remove')
         print(info[0])
-        sure = input('Are you sure to delete, 1 yes, 0 no: ')
-        remove = True if sure == '1' else False
+        sure = menuShortcuts(['Yes', 'No'], 'Are you sure to delete?', 'red')
+        remove = True if sure == 0 else False
         if remove: db.remove(Element.id == id)
 
 def getComplete():
