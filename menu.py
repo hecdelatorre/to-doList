@@ -3,7 +3,7 @@
 from simple_term_menu import TerminalMenu
 import time
 
-def pausa(t = 1): 
+def pausa(t = 0.5): 
     if(t == 0): input('Press a key to continue ')
     else: time.sleep(t)
 
@@ -23,8 +23,7 @@ def menu(title, items):
     )
     
     num = main_menu.show()
-    num = num + 1 if num is not None else exit()
-    return num
+    return num + 1 if num is not None else exit()
 
 def receivedData(title, idL, nameL, color = 'cyan'):
     cursor = "❯ "
@@ -41,7 +40,7 @@ def receivedData(title, idL, nameL, color = 'cyan'):
     )
     
     num = main_menu.show()
-    return idL[num]
+    return idL[num] if num is not None else 'Exit'
 
 def menuShortcuts(items, title, color = 'cyan'):
     menu = TerminalMenu (

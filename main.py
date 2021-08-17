@@ -27,14 +27,14 @@ def main():
             id = receivedData('Select: ', idL, nameL, 'green')
             if id != 'Exit':
                 updateDB(id)
-                pausa(0)
+                pausa()
 
         elif (opc == 4):
             idL, nameL, _ = getData()
             id = receivedData('Select: ', idL, nameL, 'red')
             if id != 'Exit':
                 removeDB(id)
-                pausa(0)
+                pausa()
 
         repeat = (opc < len(items))
 
