@@ -85,6 +85,32 @@ def removeDB(id):
         remove = True if sure == 0 else False
         if remove: db.remove(Element.id == id)
 
+def getPending():
+    idL, nameL = [], []
+    for item in db:
+        if item['state']['complete'] == False and item['state']['inProgress'] == False: 
+            idL.append(item['id'])
+            nameL.append(item['name'])
+    idL.append('Exit')
+    nameL.append('Exit')
+    return idL, nameL
+
 def getComplete():
-    # com = db.search(Element.state.complete == True)
-    return ''
+    idL, nameL = [], []
+    for item in db:
+        if item['state']['complete']: 
+            idL.append(item['id'])
+            nameL.append(item['name'])
+    idL.append('Exit')
+    nameL.append('Exit')
+    return idL, nameL
+
+def getInProgress():
+    idL, nameL = [], []
+    for item in db:
+        if item['state']['inProgress']: 
+            idL.append(item['id'])
+            nameL.append(item['name'])
+    idL.append('Exit')
+    nameL.append('Exit')
+    return idL, nameL
