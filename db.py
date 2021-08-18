@@ -2,6 +2,12 @@ from tinydb import TinyDB, Query
 from uuid import uuid4
 from datetime import datetime
 from menu import menuShortcuts
+from colored import fg, attr
+
+colorRed = fg('red')
+colorGreen = fg('green')
+colorBlue = fg('blue')
+res = attr('reset')
 
 db = TinyDB('db/db.json', indent=2, separators=(',', ': '))
 db.default_table_name = 'list'
@@ -46,7 +52,7 @@ def getById(id, message):
     inProgress = db.search(Element.id == id)[0]['state']['inProgress']  
     complete = db.search(Element.id == id)[0]['state']['complete']
     date = db.search(Element.id == id)[0]['date']
-    info = f"\n{message}\n\nName :: {name}\nIn progress :: {inProgress}\nComplete :: {complete}\nDate :: {date}\n"
+    info = f"\n{message}\n\n{colorBlue}Name{res} :: {name}\nIn progress :: {inProgress}\nComplete :: {complete}\nDate :: {date}\n"
     return info, name, inProgress, complete, date
 
 def updateDB(id):
