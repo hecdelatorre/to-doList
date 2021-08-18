@@ -47,7 +47,7 @@ def getAll():
 
 def searchDB(id): return len(db.search(Element.id == id))
 
-def getById(id, message):
+def getById(id, message = 'Current data'):
     name = db.search(Element.id == id)[0]['name']
     inProgress = db.search(Element.id == id)[0]['state']['inProgress']  
     complete = db.search(Element.id == id)[0]['state']['complete']
@@ -57,8 +57,7 @@ def getById(id, message):
 
 def updateDB(id):
     if searchDB(id) == 1:
-        info, name, inProgress, complete, date = getById(id, 'Current data')
-        print(info)
+        _, name, inProgress, complete, date = getById(id)
 
         changeName = menuShortcuts(['[Yes]', '[NO]'], 'Modify name', 'green')
         changeName = True if changeName == 0 else False
@@ -85,8 +84,6 @@ def updateDB(id):
 
 def removeDB(id):
     if searchDB(id) == 1: 
-        info = getById(id, 'Data to remove')
-        print(info[0])
         sure = menuShortcuts(['Yes', 'No'], 'Are you sure to delete?', 'red')
         remove = True if sure == 0 else False
         if remove: db.remove(Element.id == id)
