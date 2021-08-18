@@ -30,16 +30,14 @@ def insertDB():
     }
     db.insert(data)
 
-def getData():
+def getAll():
     idL, nameL = [], []
-    data = ''
     for item in db:
         idL.append(item['id'])
         nameL.append(item['name'])
-        data = data + f"\nName :: {item['name']}\nIn progress :: {item['state']['inProgress']}\nComplete :: {item['state']['complete']}\nDate :: {item['date']}\n"
     idL.append('Exit')
     nameL.append('Exit')
-    return idL, nameL, data
+    return idL, nameL
 
 def searchDB(id): return len(db.search(Element.id == id))
 

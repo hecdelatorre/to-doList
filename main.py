@@ -1,12 +1,13 @@
-from menu import menu, pausa, receivedData
-from db import getData, insertDB, updateDB, removeDB
+from menu import menu, pausa, receivedData, menuShortcuts
+from db import getAll, insertDB, updateDB, removeDB
 
 def main():
     title = "Menu"
     items = ["1 Insert", 
-             "2 GetData", 
-             "3 Update",
-             "4 Remove",
+             "2 List all", 
+             "3 List pending",
+             "4 List in progress",
+             "5 List completed",
              "Exit"]
 
     repeat = True
@@ -18,23 +19,21 @@ def main():
             pausa(0)
 
         elif (opc == 2):
-            _, _, data = getData()
-            print(f' Data\n{data}')
-            pausa(0)
+            idL, nameL = getAll()
+            id = receivedData('Select', idL, nameL)
+            id = id if id is not None else 'Exit'
+            op = menuShortcuts(['[Update]', '[Remove]'], 'Select an option', 'green') if id != 'Exit' else id
+            updateDB(id) if op == 0 else removeDB(id)
+            pausa(0.5)
 
         elif (opc == 3):
-            idL, nameL, _ = getData()
-            id = receivedData('Select: ', idL, nameL, 'green')
-            if id != 'Exit':
-                updateDB(id)
-                pausa()
+            pausa()
 
         elif (opc == 4):
-            idL, nameL, _ = getData()
-            id = receivedData('Select: ', idL, nameL, 'red')
-            if id != 'Exit':
-                removeDB(id)
-                pausa()
+            pausa()
+
+        elif (opc == 5):
+            pausa()
 
         repeat = (opc < len(items))
 
