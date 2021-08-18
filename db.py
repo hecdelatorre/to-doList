@@ -23,11 +23,13 @@ def valitadateText(text, message, valName = True, count = 0):
 def insertDB():
     name = input('Enter a name: ')
     name = valitadateText(name, 'Please enter a valid name: ')
-    
+    description = input('Enter a description: ')
+    description = valitadateText(description, 'Please enter a valid description: ')
     date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     data = {
         'id': str(uuid4()),
         'name': name,
+        'description': description,
         'state': {
             'inProgress': False,
             'complete': False
@@ -49,20 +51,26 @@ def searchDB(id): return len(db.search(Element.id == id))
 
 def getById(id, message = 'Current data'):
     name = db.search(Element.id == id)[0]['name']
+    description = db.search(Element.id == id)[0]['description']
     inProgress = db.search(Element.id == id)[0]['state']['inProgress']  
     complete = db.search(Element.id == id)[0]['state']['complete']
     date = db.search(Element.id == id)[0]['date']
-    info = f"\n{message}\n\n{colorBlue}Name{res} :: {name}\n{colorBlue}In progress{res} :: {colorGreen if inProgress else colorRed}{inProgress}{res}\n{colorBlue}Complete{res} :: {colorGreen if complete else colorRed}{complete}{res}\n{colorBlue}Date{res} :: {date}\n"
-    return info, name, inProgress, complete, date
+    info = f"\n{message}\n\n{colorBlue}Name{res} :: {name}\n{colorBlue}Description{res} :: {description}\n{colorBlue}In progress{res} :: {colorGreen if inProgress else colorRed}{inProgress}{res}\n{colorBlue}Complete{res} :: {colorGreen if complete else colorRed}{complete}{res}\n{colorBlue}Date{res} :: {date}\n"
+    return info, name, description, inProgress, complete, date
 
 def updateDB(id):
     if searchDB(id) == 1:
-        _, name, inProgress, complete, date = getById(id)
+        _, name, description, inProgress, complete, date = getById(id)
 
         changeName = menuShortcuts(['[Yes]', '[NO]'], 'Modify name', 'green')
         changeName = True if changeName == 0 else False
         name = input('Please enter a new name: ') if changeName else name
         name = valitadateText(name, 'Please enter a valid name: ')
+
+        changeDescription = menuShortcuts(['[Yes]', '[NO]'], 'Modify description', 'green')
+        changeDescription = True if changeDescription == 0 else False
+        description = input('Please enter a new description: ') if changeDescription else description
+        description = valitadateText(description, 'Please enter a valid description: ')
 
         changeState = menuShortcuts(['[Pending]', '[In progress]', '[Finished]'], 'Modify state', 'green')
         inProgress = True if changeState == 1 else False
@@ -74,6 +82,7 @@ def updateDB(id):
 
         data = {
             'name': name,
+            'description': description,
             'state': {
                 'inProgress': inProgress,
                 'complete': complete
