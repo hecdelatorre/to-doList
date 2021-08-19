@@ -14,17 +14,16 @@ db = TinyDB('db/db.json', separators=(',', ':'))
 db.default_table_name = 'list'
 Element = Query()
 
-def valitadateText(text, message, valName = True, count = 0):
+def valitadateText(text, message, valName = True):
     while valName:
-        for _ in text: count += 1
-        text = input(f'{message}') if count == 0 else text
-        valName = (count == 0)
+        text = input(f'{colorRed}{message}{res}') if len(text) == 0 else text
+        valName = (len(text) == 0)
     return text
 
 def insertDB():
-    name = input('Enter a name: ')
+    name = input(f'{colorBlue}Enter a name: {res}')
     name = valitadateText(name, 'Please enter a valid name: ')
-    description = input('Enter a description: ')
+    description = input(f'{colorBlue}Enter a description: {res}')
     description = valitadateText(description, 'Please enter a valid description: ')
     date = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     data = {
@@ -65,12 +64,12 @@ def updateDB(id):
 
         changeName = menuShortcuts(['[Yes]', '[NO]'], 'Modify name', 'green')
         changeName = True if changeName == 0 else False
-        name = input('Please enter a new name: ') if changeName else name
+        name = input(f'{colorBlue}Please enter a new name: {res}') if changeName else name
         name = valitadateText(name, 'Please enter a valid name: ')
 
         changeDescription = menuShortcuts(['[Yes]', '[NO]'], 'Modify description', 'green')
         changeDescription = True if changeDescription == 0 else False
-        description = input('Please enter a new description: ') if changeDescription else description
+        description = input(f'{colorBlue}Please enter a new description: {res}') if changeDescription else description
         description = valitadateText(description, 'Please enter a valid description: ')
 
         changeState = menuShortcuts(['[Pending]', '[In progress]', '[Finished]'], 'Modify state', 'green')
@@ -94,7 +93,7 @@ def updateDB(id):
 
 def removeDB(id):
     if searchDB(id) == 1: 
-        sure = menuShortcuts(['Yes', 'No'], 'Are you sure to delete?', 'red')
+        sure = menuShortcuts(['Yes', 'No'], f'Are you sure to delete?', 'red')
         remove = True if sure == 0 else False
         if remove: db.remove(Element.id == id)
 
