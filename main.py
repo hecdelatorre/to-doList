@@ -16,7 +16,7 @@ def main():
 
         if (opc == 1):
             insertDB()
-            pausa(0)
+            pausa(0.5)
 
         elif (opc == 2):
             idL, nameL = getAll()

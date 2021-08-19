@@ -9,7 +9,8 @@ colorGreen = fg('#73D216')
 colorBlue = fg('#338CFF')
 res = attr('reset')
 
-db = TinyDB('db/db.json', indent=2, separators=(',', ': '))
+# db = TinyDB('db/db.json', indent=2, separators=(',', ': '))
+db = TinyDB('db/db.json', separators=(',', ':'))
 db.default_table_name = 'list'
 Element = Query()
 
