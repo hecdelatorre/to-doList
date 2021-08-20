@@ -1,11 +1,7 @@
-# pip install simple-term-menu
-
 from simple_term_menu import TerminalMenu
-import time
+from time import sleep
 
-def pausa(t = 0.5): 
-    if(t == 0): input('Press a key to continue ')
-    else: time.sleep(t)
+def pausa(t = 0.5): input('Press a key to continue') if(t == 0) else sleep(t)
 
 def menu(title, items):
     cursor = "❯ "
